@@ -1,0 +1,86 @@
+@import "./pages/Employees/employees.component.scss";
+@import "./pages/new-employee/new-employee.component.scss";
+
+@mixin app-theme() {
+    @font-face {
+        font-family: "Material Icons Outlined";
+        font-style: normal;
+        font-weight: 400;
+        src: url(./../assets/MaterialIconsOutlined-Regular.otf);
+    }
+    .material-icons-outlined {
+        font-family: "Material Icons Outlined";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+    }
+    @font-face {
+        font-family: "Material Icons Rounded";
+        font-style: normal;
+        font-weight: 400;
+        src: url(./../assets/MaterialIconsRound-Regular.otf);
+    }
+    .material-icons-rounded {
+        font-family: "Material Icons Rounded";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+    }
+
+    html {
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.09px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+    }
+    body {
+        height: 100vh;
+    }
+
+    app-root {
+        .mat-toolbar {
+            .page-title {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .mat-mdc-form-field-flex {
+        height: 40px;
+    }
+
+    .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+        min-height: 40px;
+        border: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin: 0;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+    }
+
+    @include employees-theme();
+    @include new-employee-theme();
+}

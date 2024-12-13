@@ -1,0 +1,24 @@
+<div class="employees-page-wrapper">
+    <div
+        class="employees-wrapper"
+        *ngIf="employees.length else emptyPlaceHolder">
+        <ng-container *ngFor="let employee of employees">
+            <span>{{employee.name}}</span>
+        </ng-container>
+    </div>
+    <ng-template #emptyPlaceHolder>
+        <img
+            class="empty-placeholder"
+            src="assets/images/empty.svg">
+    </ng-template>
+
+    <button
+        matTooltip
+        class="add-button"
+        mat-fab
+        routerLink="/new-employee"
+        color="primary"
+        aria-label="add employee">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

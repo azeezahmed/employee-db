@@ -1,0 +1,21 @@
+@mixin employees-theme() {
+    app-employees {
+        .employees-page-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 10vh;
+
+            .add-button {
+                position: absolute;
+                border-radius: 8px;
+                bottom: 5%;
+                right: 5%;
+            }
+            .empty-placeholder {
+                display: flex;
+                width: 60%;
+                height: 50vh;
+            }
+        }
+    }
+}

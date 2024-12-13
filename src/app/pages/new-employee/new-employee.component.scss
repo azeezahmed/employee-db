@@ -1,0 +1,101 @@
+@mixin new-employee-theme() {
+    app-new-employee {
+        .new-employee-wrapper {
+            display: flex;
+            flex-direction: column;
+            padding: 5vw;
+
+            @media (min-width: 375px) {
+                .date-fields-wrapper {
+                    display: flex;
+                    gap: 16px;
+                    width: 100%;
+                    align-items: baseline;
+
+                    & > mat-icon {
+                        font-size: 28px;
+                        width: 28px;
+                        position: relative;
+                        top: 6px;
+                    }
+
+                    mat-form-field {
+                        flex: 1;
+                    }
+                }
+            }
+
+            @media (max-width: 375px) {
+                .date-fields-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    gap: 0;
+
+                    & > mat-icon {
+                        display: none;
+                    }
+
+                    mat-form-field {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        footer {
+            display: flex;
+            position: sticky;
+            top: 100%;
+            padding: 16px;
+            gap: 16px;
+            justify-content: flex-end;
+            border-top: 1px solid lightgray;
+        }
+    }
+
+    .mat-calendar-table-header-divider {
+        display: none;
+    }
+
+    .mat-calendar-body {
+        tr:first-child {
+            display: none;
+        }
+    }
+
+    mat-datepicker-content.mat-datepicker-content {
+        border-radius: 16px;
+        .mat-calendar {
+            width: 93vw;
+
+            @media (max-width: 375px) {
+                button {
+                    font-size: 12px;
+                }
+            }
+
+            td[role="gridcell"] {
+                // max-width: 5% !important;
+                // padding: 6.7% 0% !important;
+
+                .mat-calendar-body-cell-content {
+                    border-radius: 50%;
+                }
+            }
+        }
+        .mat-datepicker-actions {
+            padding: 16px 16px 16px 16px;
+            border-top: 1px solid lightgray;
+            .mat-mdc-button-base + .mat-mdc-button-base {
+                margin-left: 16px;
+                border-radius: 6px;
+            }
+        }
+    }
+
+    .mat-mdc-unelevated-button:not(:disabled).primary-50 {
+        background-color: map-get($app-palette, 50);
+        color: map-get($app-palette, 500);
+    }
+}

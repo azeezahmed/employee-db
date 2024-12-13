@@ -1,0 +1,117 @@
+<div
+    [formGroup]="newEmployeeForm"
+    class="new-employee-wrapper">
+    <mat-form-field appearance="outline">
+        <mat-icon
+            color="primary"
+            fontSet="material-icons-outlined"
+            matPrefix>
+            person
+        </mat-icon>
+        <input
+            formControlName="name"
+            matInput
+            placeholder="Employee name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-icon
+            color="primary"
+            fontSet="material-icons-outlined"
+            matPrefix>
+            work_outline
+        </mat-icon>
+        <mat-select
+            formControlName="role"
+            placeholder="Select role">
+            <mat-option *ngFor="let roleKey of employeeRoleKeys">{{employeeRolesEnum[roleKey]}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="date-fields-wrapper">
+        <mat-form-field
+            (click)="picker.open()"
+            appearance="outline">
+            <input
+                formControlName="startDate"
+                matInput
+                readonly
+                placeholder="From Date"
+                [matDatepicker]="picker">
+            <mat-icon
+                color="primary"
+                matIconPrefix>
+                event
+            </mat-icon>
+            <mat-datepicker
+                [calendarHeaderComponent]="datePickerHeaderComponent"
+                #picker>
+                <mat-datepicker-actions>
+                    <button
+                        class="primary-50"
+                        mat-flat-button
+                        matDatepickerCancel>
+                        Cancel
+                    </button>
+                    <button
+                        color="primary"
+                        mat-flat-button
+                        matDatepickerApply>
+                        Save
+                    </button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </mat-form-field>
+        <mat-icon
+            fontSet="material-icons-rounded"
+            color="primary">
+            arrow_right_alt
+        </mat-icon>
+        <mat-form-field
+            (click)="picker.open()"
+            appearance="outline">
+            <input
+                formControlName="endDate"
+                matInput
+                readonly
+                placeholder="End Date"
+                [matDatepicker]="picker">
+            <mat-icon
+                color="primary"
+                matIconPrefix>
+                event
+            </mat-icon>
+            <mat-datepicker
+                [calendarHeaderComponent]="datePickerHeaderComponent"
+                #picker>
+                <mat-datepicker-actions>
+                    <button
+                        class="primary-50"
+                        mat-flat-button
+                        matDatepickerCancel>
+                        Cancel
+                    </button>
+                    <button
+                        color="primary"
+                        mat-flat-button
+                        matDatepickerApply>
+                        Save
+                    </button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </mat-form-field>
+    </div>
+
+</div>
+<footer>
+    <button
+        class="primary-50"
+        mat-flat-button>
+        Cancel
+    </button>
+    <button
+        color="primary"
+        mat-flat-button>
+        Save
+    </button>
+</footer>
