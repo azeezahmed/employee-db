@@ -60,13 +60,19 @@
 
     .mat-calendar-body {
         tr:first-child {
-            display: none;
+            .mat-calendar-body-label {
+                visibility: hidden;
+            }
+            .mat-calendar-body-label[colspan="7"] {
+                display: none;
+            }
         }
     }
 
     mat-datepicker-content.mat-datepicker-content {
         border-radius: 16px;
         .mat-calendar {
+            max-width: 396px;
             width: 93vw;
 
             @media (max-width: 375px) {

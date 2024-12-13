@@ -3,6 +3,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from "@angular/material/core";
 import { MatCalendar, MatCalendarUserEvent } from "@angular/material/datepicker";
 import { MatIconModule } from "@angular/material/icon";
+import { Moment } from "moment";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
@@ -15,7 +16,6 @@ import { Subject, takeUntil } from "rxjs";
         margin: 16px 16px 0px 16px;
         justify-content: center;
         gap: 3px;
-
 
             &.header-buttons {
                 display: flex;
@@ -56,25 +56,25 @@ import { Subject, takeUntil } from "rxjs";
                 <button class="primary-50 action-button" mat-flat-button (click)="selectToday()">
                     Today
                 </button>
-                <button class="primary-50 action-button" mat-flat-button (click)="selectToday()">
+                <button class="primary-50 action-button" mat-flat-button (click)="selectNextWeekDay(2)">
                     Next Monday
                 </button>
             </div>
             <div class="buttons-row">
-                <button class="primary-50 action-button" mat-flat-button (click)="selectToday()">
+                <button class="primary-50 action-button" mat-flat-button (click)="selectNextWeekDay(3)">
                     Next Tuesday
                 </button>
-                <button class="primary-50 action-button" mat-flat-button (click)="selectToday()">
-                    Next Week
+                <button class="primary-50 action-button" mat-flat-button (click)="selectAfterWeek()">
+                    After 1 Week
                 </button>
             </div>
         </div>
         <div class="header">
-            <button mat-icon-button (click)="previousClicked('month')">
+            <button mat-icon-button (click)="previousMonth()">
                 <mat-icon>arrow_left</mat-icon>
             </button>
             <span class="header-label">{{periodLabel}}</span>
-            <button mat-icon-button (click)="nextClicked('month')">
+            <button mat-icon-button (click)="nextMonth()">
                 <mat-icon>arrow_right</mat-icon>
             </button>
         </div>
@@ -105,24 +105,42 @@ export class DatePickerHeaderComponent<D> implements OnDestroy {
             .format(this._calendar.activeDate, this._dateFormats.display.monthYearA11yLabel)
             .toLocaleUpperCase();
     }
+    // weekDay counting from 1: sunday
+    selectNextWeekDay(weekDay: number) {
+        const todayOrSelectedDate = this._calendar.selected as D || this._calendar.activeDate as D
 
-    previousClicked(mode: 'month' | 'year') {
-        this._calendar.activeDate =
-            mode === 'month'
-                ? this._dateAdapter.addCalendarMonths(this._calendar.activeDate, -1)
-                : this._dateAdapter.addCalendarYears(this._calendar.activeDate, -1);
+        // getDayofWeek counts from zero so + 1
+        const currentDay = this._dateAdapter.getDayOfWeek(todayOrSelectedDate) + 1
+        let noOfDaysForNextWeekDay = currentDay < weekDay ? (weekDay - currentDay) : Math.abs(currentDay - (7 + weekDay))
+
+        const dateToSelect = (todayOrSelectedDate as Moment).toDate()
+        dateToSelect.setDate(dateToSelect.getDate() + noOfDaysForNextWeekDay)
+        this.selectDateAndShowInMonthView(dateToSelect as D)
+    }
+
+    selectAfterWeek() {
+        const todayOrSelectedDate = this._calendar.selected as D || this._calendar.activeDate as D
+        const dateToSelect = (todayOrSelectedDate as Moment).toDate()
+        dateToSelect.setDate(dateToSelect.getDate() + 7)
+
+        this.selectDateAndShowInMonthView(dateToSelect as D)
+    }
+
+    previousMonth() {
+        this._calendar.activeDate = this._dateAdapter.addCalendarMonths(this._calendar.activeDate, -1)
     }
 
     selectToday() {
-        this._calendar._dateSelected({ value: new Date() } as MatCalendarUserEvent<D>)
-        this._calendar.stateChanges.next();
-        // this._calendar.activeDate = new Date() as D
+        this.selectDateAndShowInMonthView(new Date() as D)
     }
 
-    nextClicked(mode: 'month' | 'year') {
-        this._calendar.activeDate =
-            mode === 'month'
-                ? this._dateAdapter.addCalendarMonths(this._calendar.activeDate, 1)
-                : this._dateAdapter.addCalendarYears(this._calendar.activeDate, 1);
+    nextMonth() {
+        this._calendar.activeDate = this._dateAdapter.addCalendarMonths(this._calendar.activeDate, 1)
+    }
+
+    private selectDateAndShowInMonthView(date: D) {
+        this._calendar.selected = date;
+        this._calendar._goToDateInView(this._calendar.selected, 'month')
+        this._calendar.stateChanges.next();
     }
 }

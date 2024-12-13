@@ -12,6 +12,7 @@
             formControlName="name"
             matInput
             placeholder="Employee name">
+        <mat-error>Name is Required*</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -24,20 +25,25 @@
         <mat-select
             formControlName="role"
             placeholder="Select role">
-            <mat-option *ngFor="let roleKey of employeeRoleKeys">{{employeeRolesEnum[roleKey]}}</mat-option>
+            <mat-option
+                *ngFor="let roleKey of employeeRolesEnum | keyvalue"
+                [value]="roleKey.key">
+                {{roleKey.value}}
+            </mat-option>
         </mat-select>
+        <mat-error>Role  is Required*</mat-error>
     </mat-form-field>
 
     <div class="date-fields-wrapper">
         <mat-form-field
-            (click)="picker.open()"
+            (click)="startDatePicker.open()"
             appearance="outline">
             <input
                 formControlName="startDate"
                 matInput
                 readonly
                 placeholder="From Date"
-                [matDatepicker]="picker">
+                [matDatepicker]="startDatePicker">
             <mat-icon
                 color="primary"
                 matIconPrefix>
@@ -45,7 +51,7 @@
             </mat-icon>
             <mat-datepicker
                 [calendarHeaderComponent]="datePickerHeaderComponent"
-                #picker>
+                #startDatePicker>
                 <mat-datepicker-actions>
                     <button
                         class="primary-50"
@@ -68,14 +74,14 @@
             arrow_right_alt
         </mat-icon>
         <mat-form-field
-            (click)="picker.open()"
+            (click)="endDatePicker.open()"
             appearance="outline">
             <input
                 formControlName="endDate"
                 matInput
                 readonly
                 placeholder="End Date"
-                [matDatepicker]="picker">
+                [matDatepicker]="endDatePicker">
             <mat-icon
                 color="primary"
                 matIconPrefix>
@@ -83,7 +89,7 @@
             </mat-icon>
             <mat-datepicker
                 [calendarHeaderComponent]="datePickerHeaderComponent"
-                #picker>
+                #endDatePicker>
                 <mat-datepicker-actions>
                     <button
                         class="primary-50"
@@ -110,6 +116,7 @@
         Cancel
     </button>
     <button
+        (click)="onSaveClick()"
         color="primary"
         mat-flat-button>
         Save

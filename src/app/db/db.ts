@@ -1,10 +1,10 @@
 import Dexie, { Table } from 'dexie';
 
 export enum EmployeeRoles {
-    PRODUCT_DESIGNER = 'Product Designer',
-    FLUTTER_DEVELOPER = 'Flutter Developer',
-    QA_TESTER = 'Qa Tester',
-    PRODUCT_OWNER = 'Product Owner'
+    PRODUCT_DESIGNER = "Product Designer",
+    FLUTTER_DEVELOPER = "Flutter Developer",
+    QA_TESTER = "QA Tester",
+    PRODUCT_OWNER = "Product Owner",
 }
 
 export interface Employee {
