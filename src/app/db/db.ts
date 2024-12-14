@@ -9,7 +9,7 @@ export enum EmployeeRoles {
 
 export interface Employee {
     id?: number
-    role: EmployeeRoles
+    role: keyof typeof EmployeeRoles
     name: string,
     startDate: string,
     endDate?: string
@@ -29,7 +29,7 @@ export class AppDB extends Dexie {
     async populate() {
         await db.employees.add({
             name: 'Raj Sharma',
-            role: EmployeeRoles['FLUTTER_DEVELOPER'],
+            role: Object.keys(EmployeeRoles)[0] as keyof typeof EmployeeRoles,
             startDate: new Date().toISOString(),
         });
     }

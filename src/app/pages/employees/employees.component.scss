@@ -2,8 +2,39 @@
     app-employees {
         .employees-page-wrapper {
             display: flex;
-            justify-content: center;
-            margin-top: 10vh;
+            width: 100%;
+            flex-direction: column;
+
+            h4 {
+                font-size: 16px;
+                font-weight: 500;
+                margin: 0;
+            }
+
+            .section-header {
+                padding: 18px;
+                color: map-get($app-palette, 500);
+                background-color: #f5f5f5;
+            }
+
+            .employee-list {
+                padding: 0 16px;
+                display: flex;
+                flex-direction: column;
+
+                .employee-entry {
+                    h4 {
+                        margin-bottom: 6px;
+                    }
+                    .employee-role,
+                    .employee-period {
+                        margin-bottom: 6px;
+                        font-size: 14px;
+                        color: #949c9e;
+                    }
+                    padding: 16px 0;
+                }
+            }
 
             .add-button {
                 position: absolute;
@@ -15,6 +46,7 @@
                 display: flex;
                 width: 60%;
                 height: 50vh;
+                margin-top: 10vh;
             }
         }
     }

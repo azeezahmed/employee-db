@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { db, Employee } from 'src/app/db/db';
+import { db, Employee, EmployeeRoles } from 'src/app/db/db';
 
 @Component({
     selector: 'app-employees',
@@ -8,12 +7,16 @@ import { db, Employee } from 'src/app/db/db';
     styleUrls: ['./employees.component.scss']
 })
 export class EmployeesComponent implements OnInit {
-    employees: Employee[] = []
+    currentEmployees: Employee[] = []
+    previousEmployees: Employee[] = []
+    readonly employeeRolesEnum = EmployeeRoles
 
     constructor() { }
 
     ngOnInit(): void {
-        db.employees.toArray((employees) => this.employees = employees);
+        db.employees
+            .toArray((employees) =>
+                employees.forEach(employee =>
+                    employee.endDate ? this.previousEmployees.push(employee) : this.currentEmployees.push(employee)));
     }
-
 }

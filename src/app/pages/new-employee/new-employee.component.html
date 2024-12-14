@@ -31,7 +31,7 @@
                 {{roleKey.value}}
             </mat-option>
         </mat-select>
-        <mat-error>Role  is Required*</mat-error>
+        <mat-error>Role is Required*</mat-error>
     </mat-form-field>
 
     <div class="date-fields-wrapper">
@@ -39,7 +39,8 @@
             (click)="startDatePicker.open()"
             appearance="outline">
             <input
-                formControlName="startDate"
+                (dateChange)="onDateChange($event, 'startDate')"
+                [value]="startDateFormControl?.value"
                 matInput
                 readonly
                 placeholder="From Date"
@@ -53,18 +54,27 @@
                 [calendarHeaderComponent]="datePickerHeaderComponent"
                 #startDatePicker>
                 <mat-datepicker-actions>
-                    <button
-                        class="primary-50"
-                        mat-flat-button
-                        matDatepickerCancel>
-                        Cancel
-                    </button>
-                    <button
-                        color="primary"
-                        mat-flat-button
-                        matDatepickerApply>
-                        Save
-                    </button>
+                    <div class="preview-date">
+                        <mat-icon color="primary">event</mat-icon>
+                        <span>
+                            {{startDateFormControl?.value | date: 'd MMM YYYY'}}
+                        </span>
+                    </div>
+                    <div class="action-buttons">
+                        <button
+                            class="primary-50"
+                            mat-flat-button
+                            matDatepickerCancel>
+                            Cancel
+                        </button>
+                        <button
+                            color="primary"
+                            mat-flat-button
+                            matDatepickerApply>
+                            Save
+                        </button>
+                    </div>
+
                 </mat-datepicker-actions>
             </mat-datepicker>
         </mat-form-field>
@@ -77,7 +87,9 @@
             (click)="endDatePicker.open()"
             appearance="outline">
             <input
-                formControlName="endDate"
+                (dateChange)="onDateChange($event, 'endDate')"
+                [value]="endDateFormControl?.value"
+                [min]="startDateFormControl?.value"
                 matInput
                 readonly
                 placeholder="End Date"
@@ -91,18 +103,29 @@
                 [calendarHeaderComponent]="datePickerHeaderComponent"
                 #endDatePicker>
                 <mat-datepicker-actions>
-                    <button
-                        class="primary-50"
-                        mat-flat-button
-                        matDatepickerCancel>
-                        Cancel
-                    </button>
-                    <button
-                        color="primary"
-                        mat-flat-button
-                        matDatepickerApply>
-                        Save
-                    </button>
+                    <div class="preview-date">
+                        <ng-container *ngIf="endDateFormControl?.value">
+                            <mat-icon color="primary">event</mat-icon>
+                            <span>
+                                {{endDateFormControl?.value | date: 'd MMM YYYY'}}
+                            </span>
+                        </ng-container>
+
+                    </div>
+                    <div class="action-buttons">
+                        <button
+                            class="primary-50"
+                            mat-flat-button
+                            matDatepickerCancel>
+                            Cancel
+                        </button>
+                        <button
+                            color="primary"
+                            mat-flat-button
+                            matDatepickerApply>
+                            Save
+                        </button>
+                    </div>
                 </mat-datepicker-actions>
             </mat-datepicker>
         </mat-form-field>
@@ -112,6 +135,7 @@
 <footer>
     <button
         class="primary-50"
+        (click)="onCancelClick()"
         mat-flat-button>
         Cancel
     </button>

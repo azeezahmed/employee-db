@@ -1,10 +1,38 @@
 <div class="employees-page-wrapper">
     <div
         class="employees-wrapper"
-        *ngIf="employees.length else emptyPlaceHolder">
-        <ng-container *ngFor="let employee of employees">
-            <span>{{employee.name}}</span>
-        </ng-container>
+        *ngIf="(currentEmployees.length || previousEmployees.length) else emptyPlaceHolder">
+
+        <div class="section-header">
+            <h4>Current employees</h4>
+        </div>
+
+        <div class="employee-list">
+            <div
+                class="employee-entry"
+                *ngFor="let employee of currentEmployees">
+                <h4>{{employee.name | titlecase}}</h4>
+                <div class="employee-role">{{employeeRolesEnum[employee.role]}}</div>
+                <div class="employee-period">
+                    From {{employee.startDate | date: 'd MMM, YYYY'}}
+                </div>
+            </div>
+        </div>
+        <div class="section-header">
+            <h4>Previous employees</h4>
+        </div>
+        <div class="employee-list">
+            <div
+                class="employee-entry"
+                *ngFor="let employee of previousEmployees">
+                <h4>{{employee.name | titlecase}}</h4>
+                <div class="employee-role">{{employeeRolesEnum[employee.role]}}</div>
+                <div class="employee-period">
+                    {{employee.startDate | date: 'd MMM, YYYY'}} - {{employee.endDate | date: 'd MMM, YYYY'}}
+                </div>
+            </div>
+        </div>
+
     </div>
     <ng-template #emptyPlaceHolder>
         <img

@@ -58,7 +58,21 @@
         display: none;
     }
 
+    thead.mat-calendar-table-header {
+        th {
+            font-size: 15px;
+            color: #323238;
+        }
+    }
+
     .mat-calendar-body {
+        .mat-calendar-body-cell {
+            font-size: 15px;
+            .mat-calendar-body-cell-content {
+                width: 70%;
+                height: 70%;
+            }
+        }
         tr:first-child {
             .mat-calendar-body-label {
                 visibility: hidden;
@@ -91,11 +105,17 @@
             }
         }
         .mat-datepicker-actions {
+            justify-content: space-between;
             padding: 16px 16px 16px 16px;
             border-top: 1px solid lightgray;
             .mat-mdc-button-base + .mat-mdc-button-base {
                 margin-left: 16px;
                 border-radius: 6px;
+            }
+            .preview-date {
+                display: flex;
+                align-items: center;
+                gap: 8px;
             }
         }
     }

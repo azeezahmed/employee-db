@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { NewEmployeeComponent } from './pages/new-employee/new-employee.component';
@@ -45,6 +46,7 @@ export const MY_FORMATS = {
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
+        MatSnackBarModule,
         MatNativeDateModule,
         MatDatepickerModule,
         MatIconModule,
