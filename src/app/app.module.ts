@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import 'hammerjs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmployeesComponent } from './pages/employees/employees.component';
@@ -19,6 +19,8 @@ import { NewEmployeeComponent } from './pages/new-employee/new-employee.componen
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { CustomMomentDateAdapter } from './lib/cusomtMomentDateAdapter';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HammerModule } from '@angular/platform-browser';
+import { SwipeToDeleteDirective } from './directives/swipeToDelete.directive'
 
 export const MY_FORMATS = {
     parse: {
@@ -36,7 +38,8 @@ export const MY_FORMATS = {
     declarations: [
         AppComponent,
         EmployeesComponent,
-        NewEmployeeComponent
+        NewEmployeeComponent,
+        SwipeToDeleteDirective
     ],
     imports: [
         BrowserModule,
@@ -52,7 +55,8 @@ export const MY_FORMATS = {
         MatIconModule,
         MatButtonModule,
         AppRoutingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HammerModule
     ],
     providers: [{
         provide: DateAdapter,

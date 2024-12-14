@@ -8,15 +8,28 @@
         </div>
 
         <div class="employee-list">
-            <div
-                class="employee-entry"
-                *ngFor="let employee of currentEmployees">
-                <h4>{{employee.name | titlecase}}</h4>
-                <div class="employee-role">{{employeeRolesEnum[employee.role]}}</div>
-                <div class="employee-period">
-                    From {{employee.startDate | date: 'd MMM, YYYY'}}
+            <ng-container *ngFor="let employee of currentEmployees; trackBy: trackByEmployeeId">
+                <div
+                    swipeToDelete
+                    [@slideInOut]
+                    (onDelete)="OnEmployeeDelete(employee)"
+                    class="employee-row">
+                    <div class="employee-entry">
+                        <h4>{{employee.name | titlecase}}</h4>
+                        <div class="employee-role">{{employeeRolesEnum[employee.role]}}</div>
+                        <div class="employee-period">
+                            From {{employee.startDate | date: 'd MMM, YYYY'}}
+                        </div>
+                    </div>
+                    <div class="swipe-delete-box">
+                        <button mat-icon-button>
+                            <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                        </button>
+                    </div>
                 </div>
-            </div>
+
+            </ng-container>
+
         </div>
         <div class="section-header">
             <h4>Previous employees</h4>
