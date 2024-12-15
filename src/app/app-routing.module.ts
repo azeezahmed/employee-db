@@ -7,13 +7,13 @@ const routes: Routes = [
     {
         path: 'employees',
         data: { header: 'Employee List' },
-        title: 'employee-database',
+        title: 'Employee database',
         component: EmployeesComponent
     },
     {
         path: 'new-employee',
         data: { header: 'Add Employee Details' },
-        title: 'employee-database',
+        title: 'Employee database - add ',
         component: NewEmployeeComponent
     },
     {

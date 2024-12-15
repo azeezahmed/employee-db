@@ -64,7 +64,7 @@ export const MY_FORMATS = {
         deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500, panelClass: 'sticky-snack' } }],
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3000, panelClass: 'sticky-snack' } }],
 
     bootstrap: [AppComponent]
 })

@@ -10,6 +10,7 @@
             <ng-container *ngFor="let employee of currentEmployees; trackBy: trackByEmployeeId">
                 <div
                     [@slideInOut]
+                    *ngIf="!employee.markedForDeletion"
                     class="employee-row">
                     <div
                         swipeToDelete
@@ -51,6 +52,7 @@
             <ng-container *ngFor="let employee of previousEmployees; trackBy: trackByEmployeeId">
                 <div
                     [@slideInOut]
+                    *ngIf="!employee.markedForDeletion"
                     class="employee-row">
                     <div
                         swipeToDelete

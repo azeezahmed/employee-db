@@ -12,7 +12,8 @@ export interface Employee {
     role: keyof typeof EmployeeRoles
     name: string,
     startDate: string,
-    endDate?: string
+    endDate?: string,
+    markedForDeletion?: boolean
 }
 
 export class AppDB extends Dexie {
