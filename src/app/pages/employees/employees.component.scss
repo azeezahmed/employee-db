@@ -4,51 +4,82 @@
             display: flex;
             width: 100%;
             flex-direction: column;
+            height: calc(100vh - 144px);
 
             h4 {
                 font-size: 16px;
                 font-weight: 500;
                 margin: 0;
+                color: map-get($app-palette, 500);
             }
 
             .section-header {
                 padding: 18px;
                 color: map-get($app-palette, 500);
-                background-color: #f5f5f5;
+                background-color: $app-alt-color;
             }
 
             .employee-list {
-                padding: 0 16px;
                 display: flex;
                 flex-direction: column;
-
                 .employee-row {
+                    padding-left: 16px;
                     position: relative;
                     left: 0px;
+                    touch-action: pan-y !important;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    border-bottom: 1px solid lightgrey;
                 }
 
                 .employee-entry {
+                    touch-action: pan-y !important;
+
+                    & * {
+                        touch-action: pan-y !important;
+                    }
+                    &:not(.dragging) {
+                        transition: left 0.3s ease-in-out;
+                    }
                     h4 {
                         margin-bottom: 6px;
+                        color: map-get($app-palette, contrast, 900);
                     }
                     .employee-role,
                     .employee-period {
                         margin-bottom: 6px;
-                        font-size: 14px;
                         color: #949c9e;
+                    }
+                    .employee-role {
+                        font-size: 14px;
+                    }
+                    .employee-period {
+                        font-size: 12px;
                     }
                     padding: 16px 0;
                     background-color: white;
                     z-index: 1;
                     position: relative;
                 }
+                .click-delete-button {
+                    color: $app-danger;
+                    position: absolute;
+                    top: 30%;
+                    right: 5%;
+                    z-index: 1;
+                }
                 .swipe-delete-box {
                     position: absolute;
-
                     top: 0;
-                    right: -15%;
-                    background-color: #f34642;
-                    width: 100px;
+                    right: 0;
+                    background-color: $app-danger;
+                    width: 30%;
+                    @media (min-width: 600px) {
+                        width: 20%;
+                    }
                     height: 100%;
                     button {
                         color: white;
@@ -60,17 +91,57 @@
             }
 
             .add-button {
-                position: absolute;
+                position: fixed;
                 border-radius: 8px;
-                bottom: 5%;
+                bottom: 8%;
                 right: 5%;
+                z-index: 2;
             }
             .empty-placeholder {
                 display: flex;
                 width: 60%;
                 height: 50vh;
-                margin-top: 10vh;
+                margin: 10vh auto;
             }
+            .info-footer {
+                position: fixed;
+                bottom: 0;
+                z-index: 1;
+                height: 80px;
+                background: white;
+                width: 100%;
+                font-size: 15px;
+                display: flex;
+                align-items: flex-start;
+                background-color: $app-alt-color;
+                span {
+                    margin: 8px 0 0 16px;
+                    color: #949c9e;
+                }
+            }
+        }
+    }
+
+    .cdk-global-overlay-wrapper:has(.sticky-snack) {
+        width: 100%;
+
+        .cdk-overlay-pane {
+            width: inherit;
+            .mat-mdc-snack-bar-container {
+                width: 100%;
+                margin: 0;
+                .mdc-snackbar__surface {
+                    width: 100%;
+                    max-width: 100%;
+                    /* margin: 0; */
+                    border-radius: 0;
+                }
+            }
+        }
+
+        width: inherit;
+        .mdc-snackbar__surface {
+            width: inherit;
         }
     }
 }

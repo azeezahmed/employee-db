@@ -43,7 +43,7 @@ export class NewEmployeeComponent {
 
             db.employees.add(newEmployee).then(() => {
                 this.router.navigate(['employees'])
-                this.snackBar.open('Employee has been added', '', { duration: 3000 })
+                this.snackBar.open('Employee has been added', '')
             })
         }
     }

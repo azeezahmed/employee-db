@@ -45,24 +45,18 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    html {
-        font-family: Roboto;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 21.09px;
-        text-align: left;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
-    }
-    body {
-        height: 100vh;
-    }
-
     app-root {
         .mat-toolbar {
             .page-title {
                 font-size: 18px;
             }
+        }
+
+        main {
+            overflow: hidden;
+            overflow-y: auto;
+
+            touch-action: pan-y !important;
         }
     }
 

@@ -1,54 +1,65 @@
-import { Directive, ElementRef, AfterViewInit, Output, EventEmitter, Input } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Directive, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as Hammer from 'hammerjs';
 @Directive({
     selector: '[swipeToDelete]'
 })
-export class SwipeToDeleteDirective implements AfterViewInit {
+export class SwipeToDeleteDirective implements AfterViewInit, OnChanges {
+    @Input() isEnabled: boolean = false;
     @Output() onDelete = new EventEmitter();
     hammerInitialized = false;
     isDragging: boolean = false
     maxLeft = 0
     minLeft = -80;
-    lastPosX = '';
-    constructor(private el: ElementRef) { }
+    lastPosX = 0;
+    hammerManager: HammerManager = new Hammer(this.el.nativeElement, { touchAction: "auto" });
+    constructor(private el: ElementRef) {
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['isEnabled'])
+            this.hammerManager?.get('pan').set({ direction: Hammer.DIRECTION_ALL, enable: this.isEnabled })
+    }
+
+    isSwipeValidAndComplete(posX: number, event: HammerInput & { additionalEvent: string }) {
+        return Number(posX) <= this.minLeft && !['pandown', 'panup'].includes(event.additionalEvent) && event.srcEvent.type != 'pointercancel'
+    }
+
     ngAfterViewInit(): void {
         if (!this.hammerInitialized) {
+            // this.hammerManager = new Hammer(this.el.nativeElement, { touchAction: "auto" });
+            const swipeButton: HTMLElement = this.el.nativeElement.parentElement.querySelector('.swipe-delete-box')
+            if (swipeButton)
+                this.minLeft = -1 * (swipeButton.getBoundingClientRect().width)
 
-            let hammnerManager = new Hammer(this.el.nativeElement);
-            hammnerManager.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 0 });
-            hammnerManager.on("pan", (ev) => {
-                // for convience, let's get a reference to our object
-                let elem = this.el.nativeElement;
+            this.hammerManager.on("pan", (ev: HammerInput) => {
+                let elem: HTMLElement = this.el.nativeElement;
+                elem.classList.add('dragging');
 
                 if (!this.isDragging) {
                     this.isDragging = true;
                     this.lastPosX = elem.offsetLeft;
                 }
-
                 let posX = ev.deltaX + this.lastPosX;
 
-                // move our element to that position
+                // keep swipeable within range
                 if (Number(posX) > this.maxLeft)
-                    posX = this.maxLeft.toString()
-                else if (Number(posX) < this.minLeft) {
-                    posX = this.minLeft.toString()
-                }
+                    posX = this.maxLeft
+                else if (Number(posX) < this.minLeft)
+                    posX = this.minLeft
 
                 elem.style.left = posX + "px";
 
+                if (this.isSwipeValidAndComplete(posX, ev as HammerInput & { additionalEvent: string }))
+                    this.onDelete.emit();
+
                 // DRAG ENDED
-                // this is where we simply forget we are dragging
                 if (ev.isFinal) {
                     this.isDragging = false;
+                    elem.classList.remove('dragging')
                     elem.style.left = '0px'
-                    Number(posX) <= this.minLeft && this.onDelete.emit();
                 }
-                // this.onGesture.emit("swiped left");
             });
-            // hammnerManager.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL, threshold: Math.abs(this.maxLeft) - 10 })
-            // hammnerManager.on('swipeLeft', (ev) => {
-
-            // })
             this.hammerInitialized = true;
         }
     }

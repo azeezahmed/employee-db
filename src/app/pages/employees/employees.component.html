@@ -4,46 +4,85 @@
         *ngIf="(currentEmployees.length || previousEmployees.length) else emptyPlaceHolder">
 
         <div class="section-header">
-            <h4>Current employees</h4>
+            <h4>Current Employees</h4>
         </div>
-
         <div class="employee-list">
             <ng-container *ngFor="let employee of currentEmployees; trackBy: trackByEmployeeId">
                 <div
-                    swipeToDelete
                     [@slideInOut]
-                    (onDelete)="OnEmployeeDelete(employee)"
                     class="employee-row">
-                    <div class="employee-entry">
+                    <div
+                        swipeToDelete
+                        [isEnabled]="enableSwiping"
+                        (onDelete)="OnEmployeeDelete(employee, 'current')"
+                        class="employee-entry">
                         <h4>{{employee.name | titlecase}}</h4>
                         <div class="employee-role">{{employeeRolesEnum[employee.role]}}</div>
                         <div class="employee-period">
                             From {{employee.startDate | date: 'd MMM, YYYY'}}
                         </div>
                     </div>
-                    <div class="swipe-delete-box">
+                    <div
+                        *ngIf="enableSwiping else simpleClickButton"
+                        class="swipe-delete-box">
                         <button mat-icon-button>
                             <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
                         </button>
                     </div>
+                    <ng-template #simpleClickButton>
+                        <button
+                            (click)="OnEmployeeDelete(employee, 'current')"
+                            matTooltip="Delete Employee"
+                            class="click-delete-button"
+                            mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </ng-template>
                 </div>
 
             </ng-container>
 
         </div>
+
         <div class="section-header">
-            <h4>Previous employees</h4>
+            <h4>Previous Employees</h4>
         </div>
         <div class="employee-list">
-            <div
-                class="employee-entry"
-                *ngFor="let employee of previousEmployees">
-                <h4>{{employee.name | titlecase}}</h4>
-                <div class="employee-role">{{employeeRolesEnum[employee.role]}}</div>
-                <div class="employee-period">
-                    {{employee.startDate | date: 'd MMM, YYYY'}} - {{employee.endDate | date: 'd MMM, YYYY'}}
+            <ng-container *ngFor="let employee of previousEmployees; trackBy: trackByEmployeeId">
+                <div
+                    [@slideInOut]
+                    class="employee-row">
+                    <div
+                        swipeToDelete
+                        [isEnabled]="enableSwiping"
+                        (onDelete)="OnEmployeeDelete(employee, 'previous')"
+                        class="employee-entry">
+                        <h4>{{employee.name | titlecase}}</h4>
+                        <div class="employee-role">{{employeeRolesEnum[employee.role]}}</div>
+                        <div class="employee-period">
+                            {{employee.startDate | date: 'd MMM, YYYY'}} - {{employee.endDate | date: 'd MMM, YYYY'}}
+                        </div>
+                    </div>
+                    <div
+                        *ngIf="enableSwiping else simpleClickButton"
+                        class="swipe-delete-box">
+                        <button mat-icon-button>
+                            <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                        </button>
+                    </div>
+                    <ng-template #simpleClickButton>
+                        <button
+                            (click)="OnEmployeeDelete(employee, 'previous')"
+                            matTooltip="Delete Employee"
+                            class="click-delete-button"
+                            mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </ng-template>
                 </div>
-            </div>
+
+            </ng-container>
+
         </div>
 
     </div>
@@ -54,7 +93,7 @@
     </ng-template>
 
     <button
-        matTooltip
+        matTooltip="Add Employee"
         class="add-button"
         mat-fab
         routerLink="/new-employee"
@@ -62,4 +101,9 @@
         aria-label="add employee">
         <mat-icon>add</mat-icon>
     </button>
+    <footer
+        class="info-footer"
+        *ngIf="enableSwiping">
+        <span>Swipe Left to Delete</span>
+    </footer>
 </div>

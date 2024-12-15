@@ -15,6 +15,10 @@ const routes: Routes = [
         data: { header: 'Add Employee Details' },
         title: 'employee-database',
         component: NewEmployeeComponent
+    },
+    {
+        path: '**',
+        redirectTo: 'employees'
     }
 ];
 
